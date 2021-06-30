@@ -26,8 +26,6 @@ export class SlashCommandBuilder {
 		};
 	}
 
-	// #region Builder methods
-
 	/**
 	 * Adds a new sub command group to this command
 	 * @param input A function that returns a sub command group builder, or an already built builder
@@ -98,8 +96,6 @@ export class SlashCommandBuilder {
 
 		return this;
 	}
-
-	// #endregion
 }
 
 export interface SlashCommandBuilder extends SharedNameAndDescription, SharedSlashCommandOptions {}

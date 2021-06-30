@@ -9,8 +9,6 @@ import {
 } from './Assertions';
 import type { SlashCommandOptionsOnlyBuilder, ToAPIApplicationCommandOptions } from './SlashCommandBuilder';
 
-// #region Mixins
-
 export class SharedSlashCommandOptions<R = SlashCommandOptionsOnlyBuilder> {
 	protected options!: ToAPIApplicationCommandOptions[];
 
@@ -138,15 +136,13 @@ export class SharedNameAndDescription {
 	}
 }
 
-// #endregion
-
-// #region Basic options
-
 class SlashCommandOptionBase extends SharedNameAndDescription implements ToAPIApplicationCommandOptions {
 	protected required = false;
+	protected type: ApplicationCommandOptionType;
 
-	public constructor(protected type: ApplicationCommandOptionType) {
+	public constructor(type: ApplicationCommandOptionType) {
 		super();
+		this.type = type;
 	}
 
 	/**
@@ -176,10 +172,6 @@ class SlashCommandOptionBase extends SharedNameAndDescription implements ToAPIAp
 		};
 	}
 }
-
-// #endregion
-
-// #region Options with choices
 
 abstract class ApplicationCommandOptionWithChoicesBase<T extends string | number>
 	extends SlashCommandOptionBase
@@ -236,10 +228,6 @@ abstract class ApplicationCommandOptionWithChoicesBase<T extends string | number
 	}
 }
 
-// #endregion
-
-// #region Aliases
-
 export class SlashCommandStringOption extends ApplicationCommandOptionWithChoicesBase<string> {
 	protected override type = ApplicationCommandOptionType.STRING as const;
 
@@ -295,5 +283,3 @@ export class SlashCommandMentionableOption extends SlashCommandOptionBase {
 		super(ApplicationCommandOptionType.MENTIONABLE);
 	}
 }
-
-// #endregion
