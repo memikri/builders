@@ -193,7 +193,7 @@ abstract class ApplicationCommandOptionWithChoicesBase<T extends string | number
 	 * @param value The value of the choice
 	 */
 	public addChoice(name: string, value: T) {
-		if (typeof this.choices === 'undefined') this.choices = [];
+		this.choices ??= [];
 
 		validateMaxChoicesLength(this.choices);
 
@@ -271,6 +271,7 @@ export class SlashCommandUserOption extends SlashCommandOptionBase {
 		super(ApplicationCommandOptionType.USER);
 	}
 }
+
 export class SlashCommandChannelOption extends SlashCommandOptionBase {
 	protected override type = ApplicationCommandOptionType.CHANNEL as const;
 
@@ -278,6 +279,7 @@ export class SlashCommandChannelOption extends SlashCommandOptionBase {
 		super(ApplicationCommandOptionType.CHANNEL);
 	}
 }
+
 export class SlashCommandRoleOption extends SlashCommandOptionBase {
 	protected override type = ApplicationCommandOptionType.ROLE as const;
 
@@ -285,6 +287,7 @@ export class SlashCommandRoleOption extends SlashCommandOptionBase {
 		super(ApplicationCommandOptionType.ROLE);
 	}
 }
+
 export class SlashCommandMentionableOption extends SlashCommandOptionBase {
 	protected override type = ApplicationCommandOptionType.MENTIONABLE as const;
 
