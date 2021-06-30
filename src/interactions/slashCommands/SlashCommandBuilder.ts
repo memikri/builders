@@ -1,7 +1,8 @@
 import type { APIApplicationCommandOption } from 'discord-api-types/v8';
 import { mix } from 'ts-mixer';
 import { validateMaxOptionsLength, validateRequiredParameters } from './Assertions';
-import { SharedNameAndDescription, SharedSlashCommandOptions } from './SlashCommandOptions';
+import { SharedNameAndDescription } from './mixins/NameAndDescription';
+import { SharedSlashCommandOptions } from './mixins/CommandOptions';
 import { SlashCommandSubCommandBuilder, SlashCommandSubCommandGroupBuilder } from './SlashCommandSubCommands';
 
 @mix(SharedSlashCommandOptions, SharedNameAndDescription)

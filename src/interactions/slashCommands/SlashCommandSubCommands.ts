@@ -1,8 +1,9 @@
 import { ApplicationCommandOptionType } from 'discord-api-types/v8';
 import { mix } from 'ts-mixer';
 import { validateMaxOptionsLength, validateRequiredParameters } from './Assertions';
+import { SharedSlashCommandOptions } from './mixins/CommandOptions';
+import { SharedNameAndDescription } from './mixins/NameAndDescription';
 import type { ToAPIApplicationCommandOptions } from './SlashCommandBuilder';
-import { SharedNameAndDescription, SharedSlashCommandOptions } from './SlashCommandOptions';
 
 /**
  * Represents a folder for sub commands
@@ -62,7 +63,7 @@ export class SlashCommandSubCommandGroupBuilder
  *
  * For more information, go to https://discord.com/developers/docs/interactions/slash-commands#subcommands-and-subcommand-groups
  */
-@mix(SharedSlashCommandOptions, SharedNameAndDescription)
+@mix(SharedNameAndDescription, SharedSlashCommandOptions)
 export class SlashCommandSubCommandBuilder implements ToAPIApplicationCommandOptions {
 	protected name: string = undefined!;
 	protected description: string = undefined!;
