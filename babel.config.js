@@ -1,3 +1,4 @@
+/** @type {import('@babel/core').TransformOptions} */
 module.exports = {
 	parserOpts: { strictMode: true },
 	sourceMaps: 'inline',
@@ -11,4 +12,5 @@ module.exports = {
 		],
 		'@babel/preset-typescript',
 	],
+	plugins: [['@babel/plugin-proposal-decorators', { legacy: true }]],
 };
