@@ -161,6 +161,19 @@ describe('Slash Commands', () => {
 				// @ts-expect-error Checking if not providing anything, or an invalid return type causes an error
 				expect(() => getBuilder().addBooleanOption(getRoleOption())).toThrowError();
 			});
+
+			test('GIVEN invalid name THEN throw error', () => {
+				expect(() => getBuilder().setName('TEST_COMMAND')).toThrowError();
+
+				expect(() => getBuilder().setName('ĂĂĂĂĂĂ')).toThrowError();
+			});
+
+			test('GIVEN valid names THEN does not throw error', () => {
+				expect(() => getBuilder().setName('hi_there')).not.toThrowError();
+
+				// Translation: a_command
+				expect(() => getBuilder().setName('o_comandă')).not.toThrowError();
+			});
 		});
 
 		describe('Builder with sub command (group) options', () => {

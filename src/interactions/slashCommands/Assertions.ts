@@ -18,7 +18,17 @@ export function validateRequiredParameters(
 }
 
 export function validateName(name: unknown): asserts name is string {
-	ow(name, 'name', ow.string.lowercase.alphabetical.minLength(1).maxLength(32));
+	ow(
+		name,
+		'name',
+		ow.string.lowercase
+			.minLength(1)
+			.maxLength(32)
+			.addValidator({
+				message: (value, label) => `Expected ${label!} to match "^[\p{Ll}\p{N}_-]{1,32}$", got ${value} instead`,
+				validator: (value) => /^[\p{Ll}\p{N}_-]{1,32}$/u.test(value),
+			}),
+	);
 }
 
 export function validateDescription(description: unknown): asserts description is string {
