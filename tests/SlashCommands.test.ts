@@ -184,6 +184,11 @@ describe('Slash Commands', () => {
 			test('GIVEN invalid returns for builder THEN throw error', () => {
 				// @ts-expect-error Checking if not providing anything, or an invalid return type causes an error
 				expect(() => getBuilder().addBooleanOption(true)).toThrowError();
+
+				expect(() => getBuilder().addBooleanOption(null)).toThrowError();
+
+				expect(() => getBuilder().addBooleanOption(undefined)).toThrowError();
+
 				// @ts-expect-error Checking if not providing anything, or an invalid return type causes an error
 				expect(() => getBuilder().addBooleanOption(() => SlashCommandStringOption)).toThrowError();
 				// @ts-expect-error Checking if not providing anything, or an invalid return type causes an error
