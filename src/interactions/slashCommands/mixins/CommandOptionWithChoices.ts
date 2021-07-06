@@ -4,6 +4,9 @@ import { validateMaxChoicesLength } from '../Assertions';
 import type { ToAPIApplicationCommandOptions } from '../SlashCommandBuilder';
 import { SlashCommandOptionBase } from './CommandOptionBase';
 
+const stringPredicate = ow.string.minLength(1).maxLength(100);
+const integerPredicate = ow.number.finite;
+
 export abstract class ApplicationCommandOptionWithChoicesBase<T extends string | number>
 	extends SlashCommandOptionBase
 	implements ToAPIApplicationCommandOptions
@@ -24,12 +27,12 @@ export abstract class ApplicationCommandOptionWithChoicesBase<T extends string |
 		ow(
 			name,
 			`${this.type === ApplicationCommandOptionType.STRING ? 'string' : 'integer'} choice name`,
-			ow.string.minLength(1).maxLength(100),
+			stringPredicate,
 		);
 
 		// Validate the value
-		if (this.type === ApplicationCommandOptionType.STRING) ow(value, 'string choice value', ow.string.maxLength(100));
-		else ow(value, 'integer choice value', ow.number.finite);
+		if (this.type === ApplicationCommandOptionType.STRING) ow(value, 'string choice value', stringPredicate);
+		else ow(value, 'integer choice value', integerPredicate);
 
 		this.choices.push({ name, value });
 

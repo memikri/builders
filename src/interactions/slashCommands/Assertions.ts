@@ -20,30 +20,32 @@ export function validateRequiredParameters(
 	validateMaxOptionsLength(options);
 }
 
+const namePredicate = ow.string.lowercase
+	.minLength(1)
+	.maxLength(32)
+	.addValidator({
+		message: (value, label) => `Expected ${label!} to match "^[\p{Ll}\p{N}_-]{1,32}$", got ${value} instead`,
+		validator: (value) => /^[\p{Ll}\p{N}_-]{1,32}$/u.test(value),
+	});
+
 export function validateName(name: unknown): asserts name is string {
-	ow(
-		name,
-		'name',
-		ow.string.lowercase
-			.minLength(1)
-			.maxLength(32)
-			.addValidator({
-				message: (value, label) => `Expected ${label!} to match "^[\p{Ll}\p{N}_-]{1,32}$", got ${value} instead`,
-				validator: (value) => /^[\p{Ll}\p{N}_-]{1,32}$/u.test(value),
-			}),
-	);
+	ow(name, 'name', namePredicate);
 }
+
+const descriptionPredicate = ow.string.minLength(1).maxLength(100);
 
 export function validateDescription(description: unknown): asserts description is string {
-	ow(description, 'description', ow.string.minLength(1).maxLength(100));
+	ow(description, 'description', descriptionPredicate);
 }
 
+const maxArrayLengthPredicate = ow.array.maxLength(25);
+
 export function validateMaxOptionsLength(options: unknown): asserts options is ToAPIApplicationCommandOptions[] {
-	ow(options, 'options', ow.array.maxLength(25));
+	ow(options, 'options', maxArrayLengthPredicate);
 }
 
 export function validateMaxChoicesLength(choices: APIApplicationCommandOptionChoice[]) {
-	ow(choices, 'choices', ow.array.maxLength(25));
+	ow(choices, 'choices', maxArrayLengthPredicate);
 }
 
 export function assertReturnOfBuilder<
