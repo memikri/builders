@@ -52,7 +52,9 @@ export function assertReturnOfBuilder<
 	const instanceName = ExpectedInstanceOf.name;
 
 	if (is.nullOrUndefined(input)) {
-		throw new TypeError(`Expected to receive a ${instanceName} builder, got nothing instead.`);
+		throw new TypeError(
+			`Expected to receive a ${instanceName} builder, got ${input === null ? 'null' : 'undefined'} instead.`,
+		);
 	}
 
 	if (is.primitive(input)) {
