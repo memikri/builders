@@ -8,7 +8,7 @@ export abstract class ApplicationCommandOptionWithChoicesBase<T extends string |
 	extends SlashCommandOptionBase
 	implements ToAPIApplicationCommandOptions
 {
-	protected choices?: APIApplicationCommandOptionChoice[];
+	public choices?: APIApplicationCommandOptionChoice[];
 
 	/**
 	 * Adds a choice for this option

@@ -7,16 +7,25 @@ import { SlashCommandSubCommandBuilder, SlashCommandSubCommandGroupBuilder } fro
 
 @mix(SharedSlashCommandOptions, SharedNameAndDescription)
 export class SlashCommandBuilder {
-	protected name: string = undefined!;
-
-	protected description: string = undefined!;
-	protected options: ToAPIApplicationCommandOptions[] = [];
+	/**
+	 * The name of this slash command
+	 */
+	public readonly name: string = undefined!;
 
 	/**
-	 * Returns the final data that should be sent to Discord. You won't need this unless you're manually
-	 * creating slash commands via this builder.
+	 * The description of this slash command
+	 */
+	public readonly description: string = undefined!;
+
+	/**
+	 * The options of this slash command
+	 */
+	public readonly options: ToAPIApplicationCommandOptions[] = [];
+
+	/**
+	 * Returns the final data that should be sent to Discord.
 	 *
-	 * **Note:** Calling this getter will validate required properties based on their conditions.
+	 * **Note:** Calling this function will validate required properties based on their conditions.
 	 */
 	public toJSON() {
 		validateRequiredParameters(this.name, this.description, this.options);

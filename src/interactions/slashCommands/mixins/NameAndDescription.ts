@@ -1,8 +1,8 @@
 import { validateDescription, validateName } from '../Assertions';
 
 export class SharedNameAndDescription {
-	protected name!: string;
-	protected description!: string;
+	public name!: string;
+	public description!: string;
 
 	/**
 	 * Sets the name

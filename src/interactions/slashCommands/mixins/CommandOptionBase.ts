@@ -5,8 +5,8 @@ import type { ToAPIApplicationCommandOptions } from '../SlashCommandBuilder';
 import { SharedNameAndDescription } from './NameAndDescription';
 
 export class SlashCommandOptionBase extends SharedNameAndDescription implements ToAPIApplicationCommandOptions {
-	protected required = false;
-	protected type: ApplicationCommandOptionType;
+	public required = false;
+	public readonly type: ApplicationCommandOptionType;
 
 	public constructor(type: ApplicationCommandOptionType) {
 		super();

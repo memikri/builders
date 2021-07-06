@@ -10,7 +10,7 @@ import { SlashCommandUserOption } from '../options/user';
 import type { SlashCommandOptionsOnlyBuilder, ToAPIApplicationCommandOptions } from '../SlashCommandBuilder';
 
 export class SharedSlashCommandOptions<R = SlashCommandOptionsOnlyBuilder> {
-	protected options!: ToAPIApplicationCommandOptions[];
+	public readonly options!: ToAPIApplicationCommandOptions[];
 
 	/**
 	 * Adds a boolean option

@@ -10,11 +10,22 @@ import type { ToAPIApplicationCommandOptions } from './SlashCommandBuilder';
  *
  * For more information, go to https://discord.com/developers/docs/interactions/slash-commands#subcommands-and-subcommand-groups
  */
-export class SlashCommandSubCommandGroupBuilder
-	extends SharedNameAndDescription
-	implements ToAPIApplicationCommandOptions
-{
-	private readonly options: ToAPIApplicationCommandOptions[] = [];
+@mix(SharedNameAndDescription)
+export class SlashCommandSubCommandGroupBuilder implements ToAPIApplicationCommandOptions {
+	/**
+	 * The name of this sub command group
+	 */
+	public readonly name: string = undefined!;
+
+	/**
+	 * The description of this sub command group
+	 */
+	public readonly description: string = undefined!;
+
+	/**
+	 * The sub commands part of this sub command group
+	 */
+	public readonly options: ToAPIApplicationCommandOptions[] = [];
 
 	/**
 	 * Adds a new sub command to this group
@@ -58,6 +69,8 @@ export class SlashCommandSubCommandGroupBuilder
 	}
 }
 
+export interface SlashCommandSubCommandGroupBuilder extends SharedNameAndDescription {}
+
 /**
  * Represents a sub command
  *
@@ -65,9 +78,20 @@ export class SlashCommandSubCommandGroupBuilder
  */
 @mix(SharedNameAndDescription, SharedSlashCommandOptions)
 export class SlashCommandSubCommandBuilder implements ToAPIApplicationCommandOptions {
-	protected name: string = undefined!;
-	protected description: string = undefined!;
-	protected options: ToAPIApplicationCommandOptions[] = [];
+	/**
+	 * The name of this sub command
+	 */
+	public readonly name: string = undefined!;
+
+	/**
+	 * The description of this sub command
+	 */
+	public readonly description: string = undefined!;
+
+	/**
+	 * The options of this sub command
+	 */
+	public readonly options: ToAPIApplicationCommandOptions[] = [];
 
 	public toJSON() {
 		validateRequiredParameters(this.name, this.description, this.options);
