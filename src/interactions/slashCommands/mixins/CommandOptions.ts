@@ -1,4 +1,4 @@
-import { validateMaxOptionsLength } from '../Assertions';
+import { assertReturnOfBuilder, validateMaxOptionsLength } from '../Assertions';
 import type { SlashCommandOptionBase } from './CommandOptionBase';
 import { SlashCommandBooleanOption } from '../options/boolean';
 import { SlashCommandChannelOption } from '../options/channel';
@@ -90,13 +90,7 @@ export class SharedSlashCommandOptions<R = SlashCommandOptionsOnlyBuilder> {
 		// Get the final result
 		const result = typeof input === 'function' ? input(new Instance()) : input;
 
-		if (!(result instanceof Instance))
-			throw new TypeError(
-				`Expected to receive a ${Instance.name} builder back, got ${
-					// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/dot-notation
-					(result?.['name'] as string) ?? 'Unknown'
-				} ("${typeof result}") instead`,
-			);
+		assertReturnOfBuilder(result, Instance);
 
 		// Push it
 		options.push(result);

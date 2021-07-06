@@ -45,6 +45,7 @@
 	},
 	"homepage": "https://github.com/discordjs/builders#readme",
 	"dependencies": {
+		"@sindresorhus/is": "^4.0.1",
 		"discord-api-types": "^0.18.1",
 		"ow": "^0.25.0",
 		"ts-mixer": "^5.4.1",

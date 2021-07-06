@@ -1,6 +1,6 @@
 import type { APIApplicationCommandOption } from 'discord-api-types/v8';
 import { mix } from 'ts-mixer';
-import { validateMaxOptionsLength, validateRequiredParameters } from './Assertions';
+import { assertReturnOfBuilder, validateMaxOptionsLength, validateRequiredParameters } from './Assertions';
 import { SharedNameAndDescription } from './mixins/NameAndDescription';
 import { SharedSlashCommandOptions } from './mixins/CommandOptions';
 import { SlashCommandSubCommandBuilder, SlashCommandSubCommandGroupBuilder } from './SlashCommandSubCommands';
@@ -57,13 +57,7 @@ export class SlashCommandBuilder {
 		// Get the final result
 		const result = typeof input === 'function' ? input(new SlashCommandSubCommandGroupBuilder()) : input;
 
-		if (!(result instanceof SlashCommandSubCommandGroupBuilder))
-			throw new TypeError(
-				`Expected to receive a SlashCommandSubCommandGroupBuilder back, got ${
-					// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-					((result as any)?.name as string) ?? 'Unknown'
-				} ("${typeof result}") instead`,
-			);
+		assertReturnOfBuilder(result, SlashCommandSubCommandGroupBuilder);
 
 		// Push it
 		options.push(result);
@@ -93,13 +87,7 @@ export class SlashCommandBuilder {
 		// Get the final result
 		const result = typeof input === 'function' ? input(new SlashCommandSubCommandBuilder()) : input;
 
-		if (!(result instanceof SlashCommandSubCommandBuilder))
-			throw new TypeError(
-				`Expected to receive a SlashCommandSubCommandBuilder back, got ${
-					// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-					((result as any)?.name as string) ?? 'Unknown'
-				} ("${typeof result}") instead`,
-			);
+		assertReturnOfBuilder(result, SlashCommandSubCommandBuilder);
 
 		// Push it
 		options.push(result);

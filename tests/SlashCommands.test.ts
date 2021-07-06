@@ -26,6 +26,12 @@ const getMentionableOption = () => new SlashCommandMentionableOption().setName('
 const getSubCommandGroup = () => new SlashCommandSubCommandGroupBuilder().setName('owo').setDescription('Testing 123');
 const getSubCommand = () => new SlashCommandSubCommandBuilder().setName('owo').setDescription('Testing 123');
 
+class Collection {
+	public get [Symbol.toStringTag]() {
+		return 'Map';
+	}
+}
+
 describe('Slash Commands', () => {
 	describe('Assertions tests', () => {
 		test('GIVEN valid name THEN does not throw error', () => {
@@ -173,6 +179,15 @@ describe('Slash Commands', () => {
 
 				// Translation: a_command
 				expect(() => getBuilder().setName('o_comandă')).not.toThrowError();
+			});
+
+			test('GIVEN invalid returns for builder THEN throw error', () => {
+				// @ts-expect-error Checking if not providing anything, or an invalid return type causes an error
+				expect(() => getBuilder().addBooleanOption(true)).toThrowError();
+				// @ts-expect-error Checking if not providing anything, or an invalid return type causes an error
+				expect(() => getBuilder().addBooleanOption(() => SlashCommandStringOption)).toThrowError();
+				// @ts-expect-error Checking if not providing anything, or an invalid return type causes an error
+				expect(() => getBuilder().addBooleanOption(() => new Collection())).toThrowError();
 			});
 		});
 

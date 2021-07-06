@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType } from 'discord-api-types/v8';
 import { mix } from 'ts-mixer';
-import { validateMaxOptionsLength, validateRequiredParameters } from './Assertions';
+import { assertReturnOfBuilder, validateMaxOptionsLength, validateRequiredParameters } from './Assertions';
 import { SharedSlashCommandOptions } from './mixins/CommandOptions';
 import { SharedNameAndDescription } from './mixins/NameAndDescription';
 import type { ToAPIApplicationCommandOptions } from './SlashCommandBuilder';
@@ -44,13 +44,7 @@ export class SlashCommandSubCommandGroupBuilder implements ToAPIApplicationComma
 		// Get the final result
 		const result = typeof input === 'function' ? input(new SlashCommandSubCommandBuilder()) : input;
 
-		if (!(result instanceof SlashCommandSubCommandBuilder))
-			throw new TypeError(
-				`Expected to receive a SlashCommandSubCommandBuilder back, got ${
-					// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-					((result as any)?.name as string) ?? 'Unknown'
-				} ("${typeof result}") instead"`,
-			);
+		assertReturnOfBuilder(result, SlashCommandSubCommandBuilder);
 
 		// Push it
 		options.push(result);

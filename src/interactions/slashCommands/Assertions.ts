@@ -1,6 +1,9 @@
+import is from '@sindresorhus/is';
 import type { APIApplicationCommandOptionChoice } from 'discord-api-types/v8';
 import ow from 'ow';
+import type { SlashCommandOptionBase } from './mixins/CommandOptionBase';
 import type { ToAPIApplicationCommandOptions } from './SlashCommandBuilder';
+import type { SlashCommandSubCommandBuilder, SlashCommandSubCommandGroupBuilder } from './SlashCommandSubCommands';
 
 export function validateRequiredParameters(
 	name: string,
@@ -41,4 +44,27 @@ export function validateMaxOptionsLength(options: unknown): asserts options is T
 
 export function validateMaxChoicesLength(choices: APIApplicationCommandOptionChoice[]) {
 	ow(choices, 'choices', ow.array.maxLength(25));
+}
+
+export function assertReturnOfBuilder<
+	T extends SlashCommandOptionBase | SlashCommandSubCommandBuilder | SlashCommandSubCommandGroupBuilder,
+>(input: unknown, ExpectedInstanceOf: new () => T): asserts input is T {
+	const instanceName = ExpectedInstanceOf.name;
+
+	if (is.nullOrUndefined(input)) {
+		throw new TypeError(`Expected to receive a ${instanceName} builder, got nothing instead.`);
+	}
+
+	if (is.primitive(input)) {
+		throw new TypeError(`Expected to receive a ${instanceName} builder, got a primitive (${typeof input}) instead.`);
+	}
+
+	if (!(input instanceof ExpectedInstanceOf)) {
+		const constructorName = is.function_(input) ? input.name : ((input as any).constructor.name as string);
+		const stringTag = Reflect.get(input as any, Symbol.toStringTag) as string | undefined;
+
+		const fullResultName = stringTag ? `${constructorName} [${stringTag}]` : constructorName;
+
+		throw new TypeError(`Expected to receive a ${instanceName} builder, got ${fullResultName} instead.`);
+	}
 }
