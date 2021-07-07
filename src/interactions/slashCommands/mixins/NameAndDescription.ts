@@ -1,8 +1,8 @@
 import { validateDescription, validateName } from '../Assertions';
 
 export class SharedNameAndDescription {
-	public name!: string;
-	public description!: string;
+	public readonly name!: string;
+	public readonly description!: string;
 
 	/**
 	 * Sets the name
@@ -12,7 +12,7 @@ export class SharedNameAndDescription {
 		// Assert the name matches the conditions
 		validateName(name);
 
-		this.name = name;
+		Reflect.set(this, 'name', name);
 
 		return this;
 	}
@@ -25,7 +25,7 @@ export class SharedNameAndDescription {
 		// Assert the description matches the conditions
 		validateDescription(description);
 
-		this.description = description;
+		Reflect.set(this, 'description', description);
 
 		return this;
 	}
