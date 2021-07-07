@@ -7,9 +7,9 @@ import { SlashCommandMentionableOption } from '../options/mentionable';
 import { SlashCommandRoleOption } from '../options/role';
 import { SlashCommandStringOption } from '../options/string';
 import { SlashCommandUserOption } from '../options/user';
-import type { SlashCommandOptionsOnlyBuilder, ToAPIApplicationCommandOptions } from '../SlashCommandBuilder';
+import type { ToAPIApplicationCommandOptions } from '../SlashCommandBuilder';
 
-export class SharedSlashCommandOptions<R = SlashCommandOptionsOnlyBuilder> {
+export class SharedSlashCommandOptions<ShouldOmitSubCommandFunctions = true> {
 	public readonly options!: ToAPIApplicationCommandOptions[];
 
 	/**
@@ -81,7 +81,7 @@ export class SharedSlashCommandOptions<R = SlashCommandOptionsOnlyBuilder> {
 	private _sharedAddOptionMethod<T extends SlashCommandOptionBase>(
 		input: T | ((builder: T) => T),
 		Instance: new () => T,
-	): R {
+	): ShouldOmitSubCommandFunctions extends true ? Omit<this, 'addSubCommand' | 'addSubCommandGroup'> : this {
 		const { options } = this;
 
 		// First, assert options conditions - we cannot have more than 25 options
@@ -95,6 +95,6 @@ export class SharedSlashCommandOptions<R = SlashCommandOptionsOnlyBuilder> {
 		// Push it
 		options.push(result);
 
-		return this as any;
+		return this;
 	}
 }
