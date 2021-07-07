@@ -64,8 +64,10 @@ export function assertReturnOfBuilder<
 	}
 
 	if (!(input instanceof ExpectedInstanceOf)) {
-		const constructorName = is.function_(input) ? input.name : ((input as any).constructor.name as string);
-		const stringTag = Reflect.get(input as any, Symbol.toStringTag) as string | undefined;
+		const casted = input as Record<PropertyKey, unknown>;
+
+		const constructorName = is.function_(input) ? input.name : casted.constructor.name;
+		const stringTag = Reflect.get(casted, Symbol.toStringTag) as string | undefined;
 
 		const fullResultName = stringTag ? `${constructorName} [${stringTag}]` : constructorName;
 
